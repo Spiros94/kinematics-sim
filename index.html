@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<title>Robotics - Forward and Inverse kinematics</title>
+<script type="text/javascript" src="engine.js" charset="UTF-8"></script>
+<script type="text/javascript" src="draw.js" charset="UTF-8"></script>
+<script type="text/javascript"  src="supportfns.js" charset="UTF-8"></script>
+<style>
+body {
+	font: "Courier New", Courier, monospace;	
+}
+
+#content {
+	width: 100%;
+}
+
+#inside_content {
+	position: block;
+	display: block;
+	height: 300px;
+}
+
+#arm {
+	margin: 0;
+	padding: 0;
+	display: block;
+	top: 0px;
+	left: 0;
+}
+
+#myinput {	
+	width: 240px;
+	box-shadow: 3px 2px 9px rgba(88, 88, 88, 0.63);
+	border: 3px groove grey;
+	padding: 10px;
+	display: inline-block;
+}
+
+#myinput2 {
+	box-shadow: 3px 2px 9px rgba(88, 88, 88, 0.63);
+	border: 3px groove grey;
+	padding: 10px;
+	margin-left: 10px;
+	position: absolute;
+	display: inline-block;	
+}
+
+#IKbutton {
+	width: 100%;
+	display: block;
+}
+
+#IKsubmit {
+	display: inline-block;
+	float: right;
+	margin-top: 3px;	
+}
+
+.IKInput {
+	width: 100%;
+	display: block;
+	margin-top: 3px;
+}
+
+#stepSize {
+	width: 54%;
+}
+
+#log {
+    font-weight: 700;
+    display: block;
+    text-decoration: underline;
+    font-size: large;
+    color: white;
+    background-color: #383838;
+    padding: 5px;
+    margin-top: 65px;
+}
+
+
+</style>
+</head>
+
+<body onload="init();">
+	<div id="content">
+		<div id="inside_content">
+			<canvas id="arm" width="500" height="300" style="position: absolute; border:1px solid #d3d3d3;">Your browser does not support the HTML5 canvas tag.</canvas>
+		</div>
+        <div id="myinput">
+        	<h2>FK Problem</h2>
+        	<div id="theta1">
+                <label for"angle1Range">Theta 1:</label>
+                <input type="range" id="angle1Range" step="0.01" min="0" max="180" value="45" oninput="rangeToSpan(this.value, 'angle1Range-out')">
+                <span id="angle1Range-out" class="degree-range">45</span>
+            </div>
+            <div id="theta2">
+                <label for"angle2Range">Theta 2:</label>
+                <input type="range" id="angle2Range" step="0.01" min="-130" max="130" value="-20" oninput="rangeToSpan(this.value, 'angle2Range-out')">
+                <span id="angle2Range-out" class="degree-range">-20</span>
+            </div>
+   		 </div>
+         <div id="myinput2">
+         	<h2>IK Problem</h2>
+         	<div class="IKInput">
+            	<label for="IKPx">Px:</label>
+                <input id="IKPx" type="number" value="150"></input>
+            </div>
+         	<div class="IKInput">
+            	<label for="IKPy">Py:</label>
+                <input id="IKPy" type="number" value="120"></input>
+            </div>
+            <div class="IKInput">
+            	<label>Step size:</label>
+                <input id="stepSize" type="number" value ="0.5"></input>
+            </div>
+            <div id="IKbutton2">
+            	<button id="IKsubmit" onClick="RunIK();">GO!</button>
+            	<button id="IKreset" onClick="resetIK();">Reset</button>
+            </div>
+         </div>
+         <div id="log">
+         	<code id="logp"></code>
+         </div>
+	</div>
+</body>
+</html>
